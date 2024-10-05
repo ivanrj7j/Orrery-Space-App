@@ -1,6 +1,6 @@
 
 const massDivisionFactor = 1e22;
-const scaleDivisionFactor = 8e3;
+const scaleDivisionFactor = 1e4;
 
 /**
  Data structure

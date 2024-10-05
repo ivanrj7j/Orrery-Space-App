@@ -5,6 +5,8 @@ const screenVector = new Vector(screenWidth, screenHeight);
 const centerVector = new Vector(0.5, 0.5);
 
 let labels = false;
+const objects = initializeObjects(planetData);
+const planetCheckBoxes = []
 
 function setup() {
   createCanvas(screenWidth, screenHeight);
@@ -15,11 +17,18 @@ function setup() {
   toggleLabel.mousePressed(() => {
     labels = !labels;
   })
-  // button.positon(10, 100);
+
+  const checkBoxDiv = createDiv();
+
+  objects.forEach((body) => {
+    let checkbox = createCheckbox(" " + body.name, true);
+    checkbox.parent(checkBoxDiv);
+    planetCheckBoxes.push(checkbox);
+  });
 }
 
 
-const objects = initializeObjects(planetData);
+
 
 function draw() {
   background(0);
@@ -27,7 +36,7 @@ function draw() {
   const mousePosition = new Vector(mouseX, mouseY);
 
 
-  objects.forEach(body => {
+  objects.forEach((body, i) => {
 
     let distanceFromCenter = body.mass.position.distance(centerVector);
     let angularMomentum = 1 / (distanceFromCenter * 1000);
@@ -39,25 +48,31 @@ function draw() {
     const [r, g, b] = body.color;
     const absolutePosition = body.mass.position.multiply(screenVector);
 
-    fill(r, g, b);
-    noStroke()
-    circle(absolutePosition.x, absolutePosition.y, body.diameter);
-
-    if (!labels) {
-
-      body.onHover(mousePosition, [() => {
-
-        fill(255 - r, 255 - g, 255 - b);
-        stroke(r, g, b);
-        text(body.name, absolutePosition.x, absolutePosition.y);
-
-      }], absolutePosition);
-
-    }else{
-      text(body.name, absolutePosition.x, absolutePosition.y);
+    if (planetCheckBoxes[i].checked()) {
+      fill(r, g, b);
+      noStroke()
+      circle(absolutePosition.x, absolutePosition.y, body.diameter);
     }
+
+    const labelDisplay = () => {
+
+      fill(255 - r, 255 - g, 255 - b);
+      stroke(r, g, b);
+      text(body.name, absolutePosition.x, absolutePosition.y);
+
+    }
+
+    if (planetCheckBoxes[i].checked()) {
+      if (!labels) {
+
+        body.onHover(mousePosition, [labelDisplay], absolutePosition);
+
+      } else {
+        labelDisplay();
+      }
+    }
+
+
   });
-
-
 
 }

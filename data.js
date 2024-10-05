@@ -39,37 +39,37 @@ let planetData = [
         color: [193, 68, 14]
     },
 
-    // {
-    //     name: "Jupiter",
-    //     mass: 1898,
-    //     position: 5.2,
-    //     diameter: 142980,
-    //     color: [227, 220, 203]
-    // },
+    {
+        name: "Jupiter",
+        mass: 1898,
+        position: 5.2,
+        diameter: 142980,
+        color: [227, 220, 203]
+    },
 
-    // {
-    //     name: "Saturn",
-    //     mass: 568,
-    //     position: 9.54,
-    //     diameter: 120540,
-    //     color: [227, 224, 192]
-    // },
+    {
+        name: "Saturn",
+        mass: 568,
+        position: 9.54,
+        diameter: 120540,
+        color: [227, 224, 192]
+    },
 
-    // {
-    //     name: "Uranus",
-    //     mass: 86.8,
-    //     position: 19.2,
-    //     diameter: 51120,
-    //     color: [172, 229, 238]
-    // },
+    {
+        name: "Uranus",
+        mass: 86.8,
+        position: 19.2,
+        diameter: 51120,
+        color: [172, 229, 238]
+    },
 
-    // {
-    //     name: "Neptune",
-    //     mass: 102,
-    //     position: 30.06,
-    //     diameter: 49530,
-    //     color: [91, 93, 224]
-    // },
+    {
+        name: "Neptune",
+        mass: 102,
+        position: 30.06,
+        diameter: 49530,
+        color: [91, 93, 224]
+    },
 ];
 
 
