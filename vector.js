@@ -4,6 +4,14 @@ class Vector{
         this.x = x;
         this.y = y;
     }
+
+    static zero(){
+        return new Vector(0, 0);
+    }
+
+    static unit(){
+        return new Vector(1, 1);
+    }
     
     add(other){
         const newX = this.x + other.x;
