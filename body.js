@@ -9,7 +9,13 @@ class Body{
     attract(other){
         const massProdcut = this.mass * other.mass;
         const distance = this.mass.position.distance(other.mass.position);
-        const force = massProdcut / distance;
-        other.body.mass.applyForce();
+        const forceMagnitude = massProdcut / distance;
+
+        let direction = this.mass.position.subtract(other.mass.position);
+        direction = direction.normalize();
+
+        const force = direction.multiply(forceMagnitude);
+        
+        other.body.mass.applyForce(force);
     }
-}
+};
