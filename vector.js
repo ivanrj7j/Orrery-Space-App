@@ -69,4 +69,9 @@ class Vector{
     magnitude(){
         return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
     }
+
+    distance(other){
+        const a = this.subtract(other);
+        return a.magnitude();
+    }
 }
