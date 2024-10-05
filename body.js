@@ -1,8 +1,9 @@
 class Body{
-    constructor(mass, color, diameter){
+    constructor(mass, color, diameter, name){
         this.mass = mass;
         this.color = color;
         this.diameter = diameter;
+        this.name = name;
     }
 
 
@@ -20,9 +21,8 @@ class Body{
         
     }
 
-    onHover(mousePosition, executables){
-        const distance = this.mass.position.distance(mousePosition);
-        console.log(distance, "dist");
+    onHover(mousePosition, executables, absolutePosition){
+        const distance = absolutePosition.distance(mousePosition);
         if(distance < this.diameter/2){
             for (let index = 0; index < executables.length; index++) {
                 const exe = executables[index];

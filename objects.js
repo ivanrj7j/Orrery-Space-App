@@ -54,7 +54,7 @@ function initializeObjects(objectData){
         let velocity = Vector.zero();
         let mass = new Mass(massValue,position,velocity);
         
-        const body = new Body(mass, planet.color, diameter);
+        const body = new Body(mass, planet.color, diameter, planet.name);
         
         minDistance = diameter;
 

@@ -26,8 +26,7 @@ function draw() {
     circle(absolutePosition.x, absolutePosition.y, body.diameter);
     
     body.onHover(mousePosition, [() => {
-      console.log("Hello");
-    }])
+    }], absolutePosition)
 
   });
 
