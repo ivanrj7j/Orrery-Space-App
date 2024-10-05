@@ -17,5 +17,17 @@ class Body{
         const force = direction.multiply(forceMagnitude);
         
         other.body.mass.applyForce(force);
+        
+    }
+
+    onHover(mousePosition, executables){
+        const distance = this.mass.position.distance(mousePosition);
+        console.log(distance, "dist");
+        if(distance < this.diameter/2){
+            for (let index = 0; index < executables.length; index++) {
+                const exe = executables[index];
+                exe();
+            }
+        }
     }
 };
