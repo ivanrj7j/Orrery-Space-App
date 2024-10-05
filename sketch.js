@@ -5,6 +5,8 @@ const screenVector = new Vector(screenWidth, screenHeight);
 
 function setup() {
   createCanvas(screenWidth, screenHeight);
+  textSize(30);
+  textAlign(CENTER,BOTTOM )
 }
 
 
@@ -26,6 +28,11 @@ function draw() {
     circle(absolutePosition.x, absolutePosition.y, body.diameter);
     
     body.onHover(mousePosition, [() => {
+      
+        fill(255-r, 255-g, 255-b);
+        stroke(r,g,b);
+        text(body.name, absolutePosition.x, absolutePosition.y);
+
     }], absolutePosition)
 
   });
