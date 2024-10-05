@@ -1,7 +1,8 @@
-const screenWidth = window.innerWidth;
+const screenWidth = window.innerHeight;
 const screenHeight = window.innerHeight;
 const screenVector = new Vector(screenWidth, screenHeight);
 
+const centerVector = new Vector(0.5, 0.5);
 
 function setup() {
   createCanvas(screenWidth, screenHeight);
@@ -13,12 +14,19 @@ function setup() {
 const objects = initializeObjects(planetData);
 
 function draw() {
-  background(30);
+  background(0);
 
   const mousePosition = new Vector(mouseX, mouseY);
 
 
   objects.forEach(body => {
+
+    let distanceFromCenter = body.mass.position.distance(centerVector);
+    let angularMomentum = 1 / (distanceFromCenter * 1000);
+    if(distanceFromCenter == 0){
+      angularMomentum = 0;
+    }
+    body.update(angularMomentum);
 
     const [r, g, b] = body.color;
     const absolutePosition = body.mass.position.multiply(screenVector);
@@ -33,7 +41,7 @@ function draw() {
         stroke(r,g,b);
         text(body.name, absolutePosition.x, absolutePosition.y);
 
-    }], absolutePosition)
+    }], absolutePosition);
 
   });
 

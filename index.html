@@ -1,23 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Sketch</title>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Sketch</title>
 
-    <script src="libraries/p5.min.js"></script>
-    <script src="libraries/p5.sound.min.js"></script>
-  </head>
+  <link rel="stylesheet" type="text/css" href="style.css">
 
-  <body>
-    <script src="vector.js"></script>
-    <script src="mass.js"></script>
-    <script src="body.js"></script>
-    <script src="data.js"></script>
-    <script src="objects.js"></script>
-    <script src="sketch.js"></script>
-  </body>
+  <style>
+    /* style.css */
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      display: flex;
+
+      /* This centers our sketch horizontally. */
+      justify-content: center;
+
+      /* This centers our sketch vertically. */
+      align-items: center;
+    }
+  </style>
+
+  <script src="libraries/p5.min.js"></script>
+  <script src="libraries/p5.sound.min.js"></script>
+</head>
+
+<body>
+  <script src="vector.js"></script>
+  <script src="mass.js"></script>
+  <script src="body.js"></script>
+  <script src="data.js"></script>
+  <script src="objects.js"></script>
+  <script src="sketch.js"></script>
+</body>
+
 </html>

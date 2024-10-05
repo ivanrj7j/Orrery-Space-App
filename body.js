@@ -1,9 +1,12 @@
 class Body{
-    constructor(mass, color, diameter, name){
+    constructor(mass, color, diameter, name, maxDistance){
         this.mass = mass;
         this.color = color;
         this.diameter = diameter;
         this.name = name;
+        this.maxDistance = maxDistance;
+
+        this.theta = 0;
     }
 
 
@@ -29,5 +32,11 @@ class Body{
                 exe();
             }
         }
+    }
+
+    update(angularMomentum){
+        this.theta += angularMomentum;
+        this.mass.position.x = ((this.maxDistance * Math.cos(this.theta)) * 0.875) + 0.5;
+        this.mass.position.y = (this.maxDistance * Math.sin(this.theta)) + 0.5;
     }
 };
