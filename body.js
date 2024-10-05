@@ -5,5 +5,11 @@ class Body{
         this.diameter = diameter;
     }
 
-    
+
+    attract(other){
+        const massProdcut = this.mass * other.mass;
+        const distance = this.mass.position.distance(other.mass.position);
+        const force = massProdcut / distance;
+        other.body.mass.applyForce();
+    }
 }

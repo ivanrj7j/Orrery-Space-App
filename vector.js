@@ -74,4 +74,10 @@ class Vector{
         const a = this.subtract(other);
         return a.magnitude();
     }
+
+    normalize(){
+        const magnitude = this.magnitude();
+        
+        return this.divideScalar(magnitude);
+    }
 }
