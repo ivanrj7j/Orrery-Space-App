@@ -6,7 +6,18 @@ const centerVector = new Vector(0.5, 0.5);
 
 let labels = false;
 const objects = initializeObjects(planetData);
-const planetCheckBoxes = []
+const planetCheckBoxes = [];
+
+let planetASelector;
+let planetBSelector;
+let distanceSection;
+let distanceDisplay;
+
+let distances = planetData.map((obj) => {
+  return obj.position;
+});
+
+let maxDistance = Math.max(...distances);
 
 function setup() {
   createCanvas(screenWidth, screenHeight);
@@ -20,11 +31,28 @@ function setup() {
 
   const checkBoxDiv = createDiv();
 
+  distanceSection = createDiv("<h2>Calculate Distance b/w planets</h2>");
+  planetASelector = createSelect();
+  planetASelector.parent(distanceSection);
+  planetBSelector = createSelect();
+  planetBSelector.parent(distanceSection);
+  
   objects.forEach((body) => {
     let checkbox = createCheckbox(" " + body.name, true);
     checkbox.parent(checkBoxDiv);
     planetCheckBoxes.push(checkbox);
+    
+    planetASelector.option(body.name);
+    planetBSelector.option(body.name);
+    if (body.name == "Earth"){
+      planetBSelector.selected("Earth")
+    }
   });
+  
+  distanceDisplay = createDiv("Distance: ");
+  distanceDisplay.parent(distanceSection);
+
+  
 }
 
 
@@ -74,5 +102,18 @@ function draw() {
 
 
   });
+
+  const planetAIdx = planetASelector.elt.selectedIndex; 
+  const planetBIdx = planetBSelector.elt.selectedIndex; 
+  const positionA = objects[planetAIdx].mass.position;
+  const positionB = objects[planetBIdx].mass.position;
+
+  let distance = positionA.distance(positionB);
+  distance *= 2;
+  distance = Math.pow(distance, 3);
+  distance *= maxDistance;
+  distance /= 1.28
+
+  distanceDisplay.html("Distance: " + distance.toExponential(4) + " km");
 
 }
