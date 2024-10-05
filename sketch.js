@@ -4,10 +4,18 @@ const screenVector = new Vector(screenWidth, screenHeight);
 
 const centerVector = new Vector(0.5, 0.5);
 
+let labels = false;
+
 function setup() {
   createCanvas(screenWidth, screenHeight);
   textSize(30);
-  textAlign(CENTER,BOTTOM )
+  textAlign(CENTER, BOTTOM);
+
+  let toggleLabel = createButton("Toogle Labels");
+  toggleLabel.mousePressed(() => {
+    labels = !labels;
+  })
+  // button.positon(10, 100);
 }
 
 
@@ -23,7 +31,7 @@ function draw() {
 
     let distanceFromCenter = body.mass.position.distance(centerVector);
     let angularMomentum = 1 / (distanceFromCenter * 1000);
-    if(distanceFromCenter == 0){
+    if (distanceFromCenter == 0) {
       angularMomentum = 0;
     }
     body.update(angularMomentum);
@@ -34,15 +42,20 @@ function draw() {
     fill(r, g, b);
     noStroke()
     circle(absolutePosition.x, absolutePosition.y, body.diameter);
-    
-    body.onHover(mousePosition, [() => {
-      
-        fill(255-r, 255-g, 255-b);
-        stroke(r,g,b);
+
+    if (!labels) {
+
+      body.onHover(mousePosition, [() => {
+
+        fill(255 - r, 255 - g, 255 - b);
+        stroke(r, g, b);
         text(body.name, absolutePosition.x, absolutePosition.y);
 
-    }], absolutePosition);
+      }], absolutePosition);
 
+    }else{
+      text(body.name, absolutePosition.x, absolutePosition.y);
+    }
   });
 
 
