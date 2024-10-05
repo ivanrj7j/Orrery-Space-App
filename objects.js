@@ -9,3 +9,7 @@ const scaleDivisionFactor = 1e2;
 
 const sun = new Body(sunMass/massDivisionFactor, (255, 255, 255), sunDiameter/scaleDivisionFactor);
 const earth = new Body(earthMass/massDivisionFactor, (0, 0, 255), earthDiameter/scaleDivisionFactor);
+
+// hello i am testing with a new branch Headers, dont mind if i do 
+// hello there this is a new branch 
+// i dont know anything about working with teams so i am experimenting here 
