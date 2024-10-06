@@ -14,10 +14,13 @@ const objects = initializeObjects(planetData); // initializing the planet data f
 
 const planetCheckBoxes = []; // to store the checkbox states
 
+
 let planetASelector; // dropdown for selecting planets
-let planetBSelector; // dropdown for selecting planets
+let planetBSelector; // dropdown
+
 let distanceSection; // in html section to display the distance
 let distanceDisplay; // a div to show the calculated distance
+
 
 // map distances for each planets position from planetData
 let distances = planetData.map((obj) => {
@@ -27,7 +30,10 @@ let distances = planetData.map((obj) => {
 // gets the maximum distance from the sun, to scale planetary distances properly
 let maxDistance = Math.max(...distances);
 
-let simulating = true;
+// the variable to represent that it is simulating
+let simulating = true; 
+
+
 
 function setup() {
   createCanvas(screenWidth, screenHeight);
@@ -40,7 +46,10 @@ function setup() {
     labels = !labels; //flip the state on button press
   })
 
+
+  // this div contains all the checkboxes
   const checkBoxDiv = createDiv(); // this div contains all the checkboxes
+
 
   // create a section for distances
   distanceSection = createDiv("<h2>Calculate Distance b/w planets</h2>");
@@ -49,24 +58,33 @@ function setup() {
   planetBSelector = createSelect();
   planetBSelector.parent(distanceSection);
 
+  // loops through each planetary body (sun included)
   objects.forEach((body) => {
+    // checkboxes for each planet
     let checkbox = createCheckbox(" " + body.name, true);
-    checkbox.parent(checkBoxDiv);
-    planetCheckBoxes.push(checkbox);
+    checkbox.parent(checkBoxDiv); // attach to checkbox div
+    planetCheckBoxes.push(checkbox); // stores the checkbox state (true or false)
 
-    planetASelector.option(body.name);
+    // add planets as options in the dropdowns
+    planetASelector.option(body.name); 
     planetBSelector.option(body.name);
+
+    // set "earth as the default selected option for planet B"
     if (body.name == "Earth") {
       planetBSelector.selected("Earth")
     }
   });
 
+
+  // create a div to display the calculated distance
   distanceDisplay = createDiv("Distance: ");
   distanceDisplay.parent(distanceSection);
 
+
+  // creates a button to play/pause the animation
   let pauseButton = createButton("Pause");
   pauseButton.mousePressed(() => {
-    simulating = !simulating;
+    simulating = !simulating; // flips the boolean value
     if(simulating){
       pauseButton.html("Pause");
     }else{
@@ -78,48 +96,69 @@ function setup() {
 
 
 
-
-
 function draw() {
-  background(0);
+  background(0); // set background colour to black
 
+  // get the current mouse position as a vector
   const mousePosition = new Vector(mouseX, mouseY);
 
-
+  // loop through each planetary object to update and display them
   objects.forEach((body, i) => {
 
-    if (simulating) {
+    if (simulating) { // condtion to update play or pause function of the animation
+
+      //calculate the distance of the planet from the center (the sun)
       let distanceFromCenter = body.mass.position.distance(centerVector);
       let angularMomentum = 1 / (distanceFromCenter * 1000);
+      
       if (distanceFromCenter == 0) {
+        // no angular momentum if at the center in this considering this system
         angularMomentum = 0;
       }
+
+      // update the planets's position based on angualr momentum
       body.update(angularMomentum);
     }
 
-    const [r, g, b] = body.color;
+    const [r, g, b] = body.color; // destructuing the RGB values
+
+    // absolutePosition scaling based on the canvas
     const absolutePosition = body.mass.position.multiply(screenVector);
 
+    // checks if the planets should be visible
     if (planetCheckBoxes[i].checked()) {
-      fill(r, g, b);
-      noStroke()
+      fill(r, g, b); // sets the colour of the planet
+      noStroke(); // remove the stroke around the planet
+
+      // draws the planet on the canvas
       circle(absolutePosition.x, absolutePosition.y, body.diameter);
     }
+    
 
+    // function to display planet name (label) with an outline
     const labelDisplay = () => {
 
-      fill(255 - r, 255 - g, 255 - b);
-      stroke(r, g, b);
-      text(body.name, absolutePosition.x, absolutePosition.y);
+      // set text colour opposite to the planet for easier visibility
+      fill(255 - r, 255 - g, 255 - b); 
+
+      stroke(r, g, b); // outlines the text
+
+      // display the planet's name
+      text(body.name, absolutePosition.x, absolutePosition.y); 
 
     }
 
+
+    // If the planet checkbox is checked
     if (planetCheckBoxes[i].checked()) {
       if (!labels) {
 
+        // if lables are toggled off, display label only on hover
         body.onHover(mousePosition, [labelDisplay], absolutePosition);
 
       } else {
+        
+        // if labels are toggled on, displat for all planets
         labelDisplay();
       }
     }
@@ -127,17 +166,30 @@ function draw() {
 
   });
 
-  const planetAIdx = planetASelector.elt.selectedIndex;
-  const planetBIdx = planetBSelector.elt.selectedIndex;
-  const positionA = objects[planetAIdx].mass.position;
-  const positionB = objects[planetBIdx].mass.position;
 
+  // THIS ARE THE VALUES SHOWN IN THE GUI
+  // gets the selected planets from the dropdown menus
+  const planetAIdx = planetASelector.elt.selectedIndex; // index of planet A
+  const planetBIdx = planetBSelector.elt.selectedIndex; // index of planet B
+  const positionA = objects[planetAIdx].mass.position; // position of the planet A
+  const positionB = objects[planetBIdx].mass.position; // position of the planet B
+
+  // calculate distance between planet A and planet B
   let distance = positionA.distance(positionB);
-  distance *= 2;
+  
+  //double the distance for scaling
+  distance *= 2; 
+
+  // cube the distance for exaggerated scaling
   distance = Math.pow(distance, 3);
+
+  // scale it accordingly to the maximum distance
   distance *= maxDistance;
+
+  // apply final scaling to match real-world values
   distance /= 1.28
 
+  // display the calculated distance with scientific notation
   distanceDisplay.html("Distance: " + distance.toExponential(4) + " km");
 
 }
