@@ -16,7 +16,7 @@ class Mass{
     //     this.velocity = this.velocity.add(accl);
     // }
 
-    // update(){
-    //     this.updatePosition();
-    // }
+    update(){
+        this.updatePosition();
+    }
 }
