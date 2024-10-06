@@ -2,8 +2,8 @@
 const massDivisionFactor = 1e22;
 const scaleDivisionFactor = 1e4;
 
-/**
- Data structure
+/*
+    #This is the way we structure the data 
 
  [
     {
@@ -21,7 +21,7 @@ const scaleDivisionFactor = 1e4;
   Body
  ]
   
- */
+*/
 
 
 
@@ -44,7 +44,7 @@ function initializeObjects(objectData){
 
     objectData.forEach(planet => {
         
-        let massValue = planet.mass / massDivisionFactor;
+        let massValue = planet.mass ;
         let sunDistance = Math.pow(planet.position / (maxDistance*1.28), 1/3) / 2;
         let y = sunDistance+0.5;
         let diameter = (planet.diameter/maxSize) + 0.1;
@@ -56,7 +56,7 @@ function initializeObjects(objectData){
         
         const body = new Body(mass, planet.color, diameter, planet.name, sunDistance);
         
-        minDistance = diameter;
+        
 
 
         objects.push(body);
