@@ -5,16 +5,18 @@ class Mass{
         this.velocity = velocity;
     }
 
-    updatePosition(){
-        this.position = this.position.add(this.velocity);
-    }
+    // UNNECESSARY CODEs
 
-    applyForce(force){
-        const accl = force.divideScalar(this.mass);
-        this.velocity = this.velocity.add(accl);
-    }
+    // updatePosition(){
+    //     this.position = this.position.add(this.velocity);
+    // }
 
-    update(){
-        this.updatePosition();
-    }
+    // applyForce(force){
+    //     const accl = force.divideScalar(this.mass);
+    //     this.velocity = this.velocity.add(accl);
+    // }
+
+    // update(){
+    //     this.updatePosition();
+    // }
 }

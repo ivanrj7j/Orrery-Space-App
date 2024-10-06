@@ -1,22 +1,30 @@
-const screenWidth = window.innerHeight;
-const screenHeight = window.innerHeight;
-const screenVector = new Vector(screenWidth, screenHeight);
+const screenWidth = window.innerHeight; // window.innerHeight returns the height of the window, same for the width
+const screenHeight = window.innerHeight; // window.innerWidth
+// both these two lines assign the same value to width and height to make the canvas square
+// in shape as square representation is easier to analyse and pictorially represent
+// for experimental purposes you can change the values
 
-const centerVector = new Vector(0.5, 0.5);
+const screenVector = new Vector(screenWidth, screenHeight); // vector to represent the window width and height
 
-let labels = false;
-const objects = initializeObjects(planetData);
-const planetCheckBoxes = [];
+const centerVector = new Vector(0.5, 0.5); // vector representing the centre of the canvas
 
-let planetASelector;
-let planetBSelector;
-let distanceSection;
-let distanceDisplay;
+let labels = false; // initializing the labels as false. You can toggleLabels 
 
+const objects = initializeObjects(planetData); // initializing the planet data from data.js as objects.
+
+const planetCheckBoxes = []; // to store the checkbox states
+
+let planetASelector; // dropdown for selecting planets
+let planetBSelector; // dropdown for selecting planets
+let distanceSection; // in html section to display the distance
+let distanceDisplay; // a div to show the calculated distance
+
+// map distances for each planets position from planetData
 let distances = planetData.map((obj) => {
   return obj.position;
 });
 
+// gets the maximum distance from the sun, to scale planetary distances properly
 let maxDistance = Math.max(...distances);
 
 let simulating = true;
@@ -26,13 +34,15 @@ function setup() {
   textSize(30);
   textAlign(CENTER, BOTTOM);
 
+  // create button to toggle labels
   let toggleLabel = createButton("Toogle Labels");
   toggleLabel.mousePressed(() => {
-    labels = !labels;
+    labels = !labels; //flip the state on button press
   })
 
-  const checkBoxDiv = createDiv();
+  const checkBoxDiv = createDiv(); // this div contains all the checkboxes
 
+  // create a section for distances
   distanceSection = createDiv("<h2>Calculate Distance b/w planets</h2>");
   planetASelector = createSelect();
   planetASelector.parent(distanceSection);
