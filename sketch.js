@@ -27,6 +27,8 @@ let distances = planetData.map((obj) => {
 // gets the maximum distance from the sun, to scale planetary distances properly
 let maxDistance = Math.max(...distances);
 
+let simulating = true;
+
 function setup() {
   createCanvas(screenWidth, screenHeight);
   textSize(30);
@@ -46,24 +48,34 @@ function setup() {
   planetASelector.parent(distanceSection);
   planetBSelector = createSelect();
   planetBSelector.parent(distanceSection);
-  
+
   objects.forEach((body) => {
     let checkbox = createCheckbox(" " + body.name, true);
     checkbox.parent(checkBoxDiv);
     planetCheckBoxes.push(checkbox);
-    
+
     planetASelector.option(body.name);
     planetBSelector.option(body.name);
-    if (body.name == "Earth"){
+    if (body.name == "Earth") {
       planetBSelector.selected("Earth")
     }
   });
-  
+
   distanceDisplay = createDiv("Distance: ");
   distanceDisplay.parent(distanceSection);
 
-  
+  let pauseButton = createButton("Pause");
+  pauseButton.mousePressed(() => {
+    simulating = !simulating;
+    if(simulating){
+      pauseButton.html("Pause");
+    }else{
+      pauseButton.html("Resume");
+    }
+  })
 }
+
+
 
 
 
@@ -76,12 +88,14 @@ function draw() {
 
   objects.forEach((body, i) => {
 
-    let distanceFromCenter = body.mass.position.distance(centerVector);
-    let angularMomentum = 1 / (distanceFromCenter * 1000);
-    if (distanceFromCenter == 0) {
-      angularMomentum = 0;
+    if (simulating) {
+      let distanceFromCenter = body.mass.position.distance(centerVector);
+      let angularMomentum = 1 / (distanceFromCenter * 1000);
+      if (distanceFromCenter == 0) {
+        angularMomentum = 0;
+      }
+      body.update(angularMomentum);
     }
-    body.update(angularMomentum);
 
     const [r, g, b] = body.color;
     const absolutePosition = body.mass.position.multiply(screenVector);
@@ -113,8 +127,8 @@ function draw() {
 
   });
 
-  const planetAIdx = planetASelector.elt.selectedIndex; 
-  const planetBIdx = planetBSelector.elt.selectedIndex; 
+  const planetAIdx = planetASelector.elt.selectedIndex;
+  const planetBIdx = planetBSelector.elt.selectedIndex;
   const positionA = objects[planetAIdx].mass.position;
   const positionB = objects[planetBIdx].mass.position;
 
